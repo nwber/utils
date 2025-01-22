@@ -73,12 +73,27 @@ def uptime():
     
     uptime = f"{days} days, {hour:02}:{mins:02}:{sec:02}"
     currTimeVerbose = time.localtime()
+
+    ## Hacky way to avoid single digit hour/min/sec 
+    #hours
+    if currTimeVerbose.tm_hour <=9:
+        hour = f"0{currTimeVerbose.tm_hour}"
+    else:
+        hour = currTimeVerbose.tm_hour
+
+    #minutes
+    if currTimeVerbose.tm_min <=9:
+        min = f"0{currTimeVerbose.tm_min}"
+    else:
+        min = currTimeVerbose.tm_min
+
+    #seconds
     if currTimeVerbose.tm_sec <=9:
         sec = f"0{currTimeVerbose.tm_sec}"
     else:
         sec = currTimeVerbose.tm_sec
 
-    currTime = f"{currTimeVerbose.tm_hour}:{currTimeVerbose.tm_min}:{sec}"
+    currTime = f"{hour}:{min}:{sec}"
 
     print(f"{currTime}, up {uptime}")
 
@@ -87,18 +102,12 @@ def wc(filename: str):
     count = 0
     f = open(filename)
     for line in f:
-        print(line)
         for word in line.split(" "):
-            word.strip('\n')
-            if "\n" in word:
-                print(f'{word} is not valid, will not increment')
-            elif " " in word:
-                print(f'{word} is not valid, will not increment')
-            else:
-                print(f'{word} --> increment 1')
-                count = count + 1
-            print("|------------------------|\n")
-    print(count)
+            if (word != "\n") and (" " not in word):
+                count += 1
+    print(f'Word count: {count}')
+
+    #TODO: chars and lines
 
 if __name__ == "__main__":
     app()

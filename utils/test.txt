@@ -1,0 +1,5 @@
+test file
+testing things
+
+total words? that's 12
+total lines? that's 5
